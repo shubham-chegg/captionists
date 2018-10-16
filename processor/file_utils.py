@@ -8,7 +8,10 @@ def move_file(from_file_path, to_file_path):
 
 
 def get_file_name(path):
-    return '.'.join(path.split("/")[-1].split(".")[:-1])
+    file_name = path.split("/")[-1]
+    if '.' in file_name:
+        return '.'.join(file_name.split(".")[:-1])
+    return file_name
 
 
 def get_subtitles_file(file_name):
