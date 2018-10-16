@@ -6,4 +6,5 @@ static/audio/*
 static/with_subs/*
 .google/*
 *.pyc
+.venv/*
 

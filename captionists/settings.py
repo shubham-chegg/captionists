@@ -124,8 +124,18 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, 'static'),
+)
+
 PENDING_FILES = BASE_DIR + '/static/uploaded/'
 CREATED_FILES = BASE_DIR + '/static/with_subs/'
 PROCESSED_FILES = BASE_DIR + '/static/processed/'
 SUBTITLES_FILE = BASE_DIR + '/static/audio/subtitles/'
 AUDIO_FILES = BASE_DIR + '/static/audio/'
+
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
