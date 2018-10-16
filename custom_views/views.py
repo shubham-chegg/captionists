@@ -11,7 +11,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 from captionists import settings
-from processor.file_utils import move_file, get_file_name
+from processor.file_utils import move_file, get_file_name, get_subtitles_file, \
+    get_pending_video_file, get_video_file_with_subs, get_processed_file
 from processor.main import create_subtitles_file
 
 
@@ -45,23 +46,31 @@ def get_videos(request, status):
 
 @api_view(['POST'])
 def process_video(request, action):
-    status = '123'
+    status = ''
+    file_name = request.POST.get('file_name')
     if action == 'create_subtitles':
-        if create_subtitles_file(settings.PENDING_FILES + request.POST.get('file_name'),
+        if create_subtitles_file(get_pending_video_file(file_name),
                                  request.POST.get('language_code'),
                                  get_file_name(request.POST.get('file_name'))):
-            status = move_file(settings.PENDING_FILES + request.POST.get('file_name'),
-                               settings.CREATED_FILES + request.POST.get('file_name'))
+            status = move_file(get_pending_video_file(file_name),
+                               get_video_file_with_subs(file_name))
     elif action == 'approve':
-        status = move_file(settings.CREATED_FILES + request.POST.get('file_name'),
-                           settings.PROCESSED_FILES + request.POST.get('file_name'))
+        status = move_file(get_video_file_with_subs(file_name), get_processed_file(file_name))
 
     return Response({'status': status})
 
 
 @api_view(['POST'])
 def update_subtitles(request, file_name):
+    file_path = get_subtitles_file(file_name)
+
+    if os.path.exists(file_path) and request.POST.get('data'):
+        f = open(file_path, 'w')
+        f.write(request.POST.get('data', ''))
+        f.close()
+
     return Response({'status':'success'})
+
 
 def edit_views(request, file_name):
     return render(request, 'video.html', {'video_url': settings.CREATED_FILES_URL + file_name + ".mp4",

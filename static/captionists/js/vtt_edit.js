@@ -128,7 +128,19 @@ function create_webvtt() {
             new_webvtt += next_cue.text + "\n\n"
         }
     }
-    console.log(new_webvtt)
+    // console.log(new_webvtt)
+
+    var pathList = window.location.pathname.split('/');
+    var post_url = "/subtitles/update/" + pathList[pathList.length - 2] + "/";
+    console.log(post_url)
+
+    $.post( post_url,
+        {
+            data: new_webvtt
+        },
+    function(data, status){
+        console.log("Posted with status code: " + status);
+    });
 }
 
 function cue_to_view() {
