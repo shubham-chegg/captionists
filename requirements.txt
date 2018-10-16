@@ -1,0 +1,4 @@
+djangorestframework==3.8.2
+pip install --upgrade google-cloud-speech
+pip install --upgrade google-cloud-storage
+
