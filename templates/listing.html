@@ -10,44 +10,56 @@
     {% if error_message %}
         <p> {{ error_message }}</p>
     {%  else %}
+
+    {% if file_uploaded %}
+        <script type="application/javascript">
+            window.location = window.location;
+        </script>
+    {% endif %}
     <table class="table">
         <thead>
             <tr>
                 <th>File Name</th>
-                <th>Locale</th>
+                {% if action.1 == 'create_subtitles' %}
+                    <th>Locale</th>
+                {% endif %}
                 <th>Action</th>
             </tr>
         </thead>
         {% for file in files %}
             <tr>
                 <td>{{ file }} {% for action in actions %}</td>
-                <td>
-                    <select>
-                        <option value="en-AU">English (Australia)</option>
-                        <option value="en-CA">English (Canada)</option>
-                        <option value="en-GH">English (Ghana)</option>
-                        <option value="en-GB">English (Great Britain)</option>
-                        <option value="en-IN">English (India)</option>
-                        <option value="en-IE">English (Ireland)</option>
-                        <option value="en-KE">English (Kenya)</option>
-                        <option value="en-NZ">English (New Zealand)</option>
-                        <option value="en-NG">English (Nigeria)</option>
-                        <option value="en-PH">English (Philippines)</option>
-                        <option value="en-ZA">English (South Africa)</option>
-                        <option value="en-TZ">English (Tanzania)</option>
-                        <option value="en-US">English (United States)</option>
-                    </select>
-                </td>
+                {% if action.1 == 'create_subtitles' %}
+                    <td>
+                        <select>
+                            <option value="en-US">English (United States)</option>
+                            <option value="en-IN">English (India)</option>
+                            <option value="en-AU">English (Australia)</option>
+                            <option value="en-CA">English (Canada)</option>
+                            <option value="en-GH">English (Ghana)</option>
+                            <option value="en-GB">English (Great Britain)</option>
+                            <option value="en-IE">English (Ireland)</option>
+                            <option value="en-KE">English (Kenya)</option>
+                            <option value="en-NZ">English (New Zealand)</option>
+                            <option value="en-NG">English (Nigeria)</option>
+                            <option value="en-PH">English (Philippines)</option>
+                            <option value="en-ZA">English (South Africa)</option>
+                            <option value="en-TZ">English (Tanzania)</option>
+                        </select>
+                    </td>
+                {% endif %}
                 <td><input class="btn btn-info" type="button" value="{{ action.0 }}" onclick="return createSubtitles(this,'{{ file }}', '{{ action.1 }}')"/>{% endfor %}</td></tr>
         {%  endfor %}
     </table>
     {%  endif %}
 
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="file" name="file">
-        <button type="submit">Upload</button>
-    </form>
+    {% if actions.0.1 == 'create_subtitles' %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="file">
+            <button type="submit">Upload</button>
+        </form>
+    {% endif %}
 {% endblock %}
 
 
