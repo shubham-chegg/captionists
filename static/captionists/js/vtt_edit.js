@@ -188,6 +188,8 @@ function cue_to_view() {
 
 function processVideo(sender, filename, action) {
     var language_code = $(sender).closest('tr').find('select').val();
+    var overlay = $('.overlay');
+    overlay.addClass('show');
     if(action == 'edit'){
         window.location = '/edit/video/' + filename.slice(0, -4);
     } else {
@@ -198,8 +200,12 @@ function processVideo(sender, filename, action) {
                 'language_code': language_code
             },
             type: 'POST',
-            success: function () {
-                location.reload();
+            success: function (data) {
+                $('.alert').html(data.message);
+                $('.alert').addClass('alert-info');
+                setTimeout(function(){overlay.removeClass('show');}, 1000);
+                $(sender).closest('tr').remove();
+                //location.reload();
             },
             fail: function (error) {
                 alert(error);

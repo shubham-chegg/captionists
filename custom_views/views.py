@@ -47,6 +47,7 @@ def get_videos(request, status=None):
 @api_view(['POST'])
 def process_video(request, action):
     status = ''
+    message = ''
     file_name = request.POST.get('file_name')
     if action == 'create_subtitles':
         if create_subtitles_file(get_pending_video_file(file_name),
@@ -54,10 +55,11 @@ def process_video(request, action):
                                  get_file_name(request.POST.get('file_name'))):
             status = move_file(get_pending_video_file(file_name),
                                get_video_file_with_subs(file_name))
+            message = 'Successfully Created Captions for ' + file_name + '. Please review the file under Created.'
     elif action == 'approve':
         status = move_file(get_video_file_with_subs(file_name), get_processed_file(file_name))
 
-    return Response({'status': status})
+    return Response({'status': status, 'message': message})
 
 
 @api_view(['POST'])
@@ -80,4 +82,5 @@ def update_subtitles(request, file_name):
 
 def edit_views(request, file_name):
     return render(request, 'video.html', {'video_url': settings.CREATED_FILES_URL + file_name + ".mp4",
-                                          'subtitles_url': settings.SUBTITLES_FILE_URL + file_name + ".vtt"})
+                                          'subtitles_url': settings.SUBTITLES_FILE_URL + file_name + ".vtt",
+                                          'file_name': file_name})
