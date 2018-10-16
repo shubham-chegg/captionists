@@ -9,6 +9,8 @@ def generate_subs(context, output_file_path):
             f.write("{}\n\n".format(entry['line'].strip()))
     except Exception, ex:
         print ex.message
+        f.close()
         return False
 
+    f.close()
     return True
