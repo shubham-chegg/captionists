@@ -1,0 +1,8 @@
+.idea/*
+db.sqlite3
+static/uploaded/*
+static/processed/*
+static/audio/*
+static/with_subs/*
+*.pyc
+

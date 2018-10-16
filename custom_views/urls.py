@@ -1,0 +1,10 @@
+from django.conf.urls import url
+from django.contrib import admin
+
+import views
+
+urlpatterns = [
+    url(r'^list/(?P<status>[a-z]+)/$', views.get_videos, name='get videos'),
+    url(r'^upload/video/$', views.upload_video, name='upload video'),
+    url(r'^process/video/(?P<action>[a-z_]+)/$', views.process_video, name='process video'),
+]
