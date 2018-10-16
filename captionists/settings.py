@@ -134,6 +134,9 @@ PROCESSED_FILES = BASE_DIR + '/static/processed/'
 SUBTITLES_FILE = BASE_DIR + '/static/audio/subtitles/'
 AUDIO_FILES = BASE_DIR + '/static/audio/'
 
+CREATED_FILES_URL = '/static/with_subs/'
+SUBTITLES_FILE_URL = '/static/audio/subtitles/'
+
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',

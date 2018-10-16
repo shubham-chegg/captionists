@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en-IE">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Test</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" />
+	<link rel="stylesheet" href="/static/captionists/css/styles.css" />
+	<!--<script type="text/javascript" src="js/vtt.js"></script>-->
+	<script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+            crossorigin="anonymous"></script>
+	<script type="text/javascript" src="/static/captionists/js/vtt_edit.js"></script>
+	<script type="text/javascript" src="/static/captionists/js/parser.js"></script>
+</head>
+
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-5">
+				<figure id="videoContainer" data-fullscreen="false">
+					<video id="video" controls preload="metadata">
+						<source src="{{ video_url }}" type="video/mp4">
+						<!-- <track label="English" kind="subtitles" srclang="en" src="subtitles/vtt/sintel-en.vtt" default> -->
+					</video>
+				</figure>
+			</div>
+			<div class="col-sm-7">
+				<div class="caption-region">
+					<table id="caption_table">
+						<tr>
+							<th>Start Time</th>
+							<th>End Time</th>
+							<th>Caption</th>
+							<th>Actions</th>
+						</tr>
+					</table>
+				</div>
+				<button class="btn btn-success" type="button" onclick="create_webvtt()">Save</button>
+			</div>
+		</div>
+	</div>
+	<script>
+		function attach_sub(data) {
+			parse_and_attach(this.responseText);
+		}
+		(function () {
+			loadFile("{{ subtitles_url }}", 2000, attach_sub);
+			cue_to_view();
+		})();
+	</script>
+</body>
+
+</html>

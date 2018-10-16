@@ -57,3 +57,8 @@ def process_video(request, action):
                            settings.PROCESSED_FILES + request.POST.get('file_name'))
 
     return Response({'status': status})
+
+
+def edit_views(request, file_name):
+    return render(request, 'video.html', {'video_url': settings.CREATED_FILES_URL + file_name + ".mp4",
+                                          'subtitles_url': settings.SUBTITLES_FILE_URL + file_name + ".vtt"})
