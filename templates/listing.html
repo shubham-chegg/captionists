@@ -3,24 +3,7 @@
 {% load static %}
 
 {% block js %}
-    <script>
-        function click(filename, action) {
-            $.ajax({
-                url: '/process/video/' + action + "/",
-                data: {
-                    'file_name': filename,
-                    'language_code': "en-US"
-                },
-                type: 'POST',
-                success: function () {
-                    window.refresh();
-                },
-                fail: function (error) {
-                    alert(error);
-                }
-            });
-        }
-    </script>
+
 {% endblock %}
 
 {% block content %}

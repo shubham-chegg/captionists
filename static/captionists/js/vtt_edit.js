@@ -30,14 +30,24 @@ function parse_and_attach(data) {
     var track = video.addTextTrack('captions', "English", "en");
     track.mode = "showing";
 
-
+    var count = 0;
     for (var next_cue_key in cue_tree.cues) {
         var obj = cue_tree.cues[next_cue_key];
         // console.log(obj)
         var newCue = new VTTCue(obj.startTime, obj.endTime, obj.text);
         track.addCue(newCue);
+        newCue.id = count;
+        add_captions_to_table(count, obj.startTime, obj.endTime, obj.text);
+        count++;
+    }
 
-        add_captions_to_table(obj.startTime, obj.endTime, obj.text);
+    track.oncuechange = function(e){
+      $(".cue-text").css('backgroundColor','');
+      if(e.currentTarget.activeCues.length == 0) {
+        return;
+      }
+
+      $('#cue_index_'+ e.currentTarget.activeCues[0].id).css('backgroundColor','#aaa')
     }
 }
 
@@ -52,7 +62,7 @@ function update_cue(cue_index) {
     video.textTracks[0].cues[cue_index].text = document.getElementById('cue_index_' + cue_index).value;
 }
 
-function add_captions_to_table(start_time, end_time, text) {
+function add_captions_to_table(count, start_time, end_time, text) {
     var table = document.getElementById("caption_table");
     var rowCount = table.rows.length;
     var row = table.insertRow(rowCount);
@@ -66,7 +76,7 @@ function add_captions_to_table(start_time, end_time, text) {
     cell1.innerHTML = "<div>" + end_time + "</div>"
 
     var cell2 = row.insertCell(2);
-    cell2.innerHTML = "<textarea rows='3' cols='50' id='cue_index_" + (rowCount - 1) + "' />"
+    cell2.innerHTML = "<textarea rows='3' class='cue-text' cols='50' id='cue_index_" + (rowCount - 1) + "' />"
 
     var cell3 = row.insertCell(3);
     cell3.innerHTML = "<img id='play_" + (rowCount - 1) + "' src='/static/captionists/icons/play.png'></img>"
@@ -163,3 +173,20 @@ function cue_to_view() {
     // console.log("seting alarm....")
     setTimeout(function(){cue_to_view()},3000);
 }
+
+function click(filename, action) {
+            $.ajax({
+                url: '/process/video/' + action + "/",
+                data: {
+                    'file_name': filename,
+                    'language_code': "en-US"
+                },
+                type: 'POST',
+                success: function () {
+                    location.reload();
+                },
+                fail: function (error) {
+                    alert(error);
+                }
+            });
+        }
