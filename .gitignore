@@ -4,5 +4,6 @@ static/uploaded/*
 static/processed/*
 static/audio/*
 static/with_subs/*
+.google/*
 *.pyc
 
