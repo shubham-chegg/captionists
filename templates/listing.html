@@ -10,11 +10,18 @@
     {% if error_message %}
         <p> {{ error_message }}</p>
     {%  else %}
-    <ul>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>File Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
         {% for file in files %}
-            <li>{{ file }} {% for action in actions %}<input type="button" value="{{ action.0 }}"  onclick="click('{{ file }}', '{{ action.1 }}')"/>{% endfor %}</li>
+            <tr>
+                <td>{{ file }} {% for action in actions %}</td><td><input class="btn btn-info" type="button" value="{{ action.0 }}"  onclick="click('{{ file }}', '{{ action.1 }}')"/>{% endfor %}</td></tr>
         {%  endfor %}
-    </ul>
+    </table>
     {%  endif %}
 {% endblock %}
 

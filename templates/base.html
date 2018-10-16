@@ -5,14 +5,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Captionist</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css"/>
-    {% load static %}
+	<link rel="stylesheet" href="/static/captionists/css/styles.css" />
 </head>
 <body>
-    {% block content %}{%  endblock %}
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Captionist</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">Pending Videos</a></li>
+          <li><a href="#">Approve Videos</a></li>
+          <li><a href="#">Processed</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container">
+        {% block content %}{%  endblock %}
+    </div>
     <script src="https://code.jquery.com/jquery-1.12.4.js"
             integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
             crossorigin="anonymous"></script>
+    {% block scripts %}{%  endblock %}
     <script type="text/javascript" src="/static/captionists/js/vtt_edit.js"></script>
 
 </body>
