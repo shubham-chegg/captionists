@@ -25,7 +25,6 @@ def get_videos(request, status=None):
         myfile = request.FILES['file']
         fs = FileSystemStorage()
         fs.save(myfile.name, myfile)
-        return render(request, 'listing.html', {'file_uploaded': file_uploaded})
 
 
     folders = {'pending': settings.PENDING_FILES,

@@ -192,7 +192,7 @@ function createSubtitles(sender, filename, action) {
         url: '/process/video/' + action + "/",
         data: {
             'file_name': filename,
-            'language_code': "en-US"
+            'language_code': language_code
         },
         type: 'POST',
         success: function () {
