@@ -10,44 +10,50 @@
     {% if error_message %}
         <p> {{ error_message }}</p>
     {%  else %}
-    <div class="row">
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <h4>Upload a video file</h4>
-            <div class="row">
-                <div class="col-sm-10">
-                    <span class="control-fileupload">
-                        <label class="text-left">Please choose a file on your computer.</label>
-                        <input type="file" name="file" >
-                    </span>
+    {% if status == 'pending' %}
+        <div class="row">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h4>Upload a video file</h4>
+                <div class="row">
+                    <div class="col-sm-10">
+                        <span class="control-fileupload">
+                            <label class="text-left">Please choose a file on your computer.</label>
+                            <input type="file" name="file" >
+                        </span>
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="submit" class="btn btn-success">Upload</button>
+                    </div>
                 </div>
-                <div class="col-sm-2">
-                    <button type="submit" class="btn btn-success">Upload</button>
-                </div>
-            </div>
 
-        </form>
-    </div>
+            </form>
+        </div>
+    {% endif %}
     <div class="row">
         <h4>Video are in {{ status }}</h4>
         <table class="table">
             <thead>
                 <tr>
                     <th>File Name</th>
+                {% if action.1 == 'create_subtitles' %}
                     <th>Locale</th>
+                {% endif %}
                     <th>Action</th>
                 </tr>
             </thead>
             {% for file in files %}
                 <tr>
-                    <td>{{ file }} {% for action in actions %}</td>
+                    <td>{{ file }}</td>
+                {% if status == 'pending' %}
                     <td>
                         <select>
+                            <option value="en-US">English (United States)</option>
+                            <option value="en-IN">English (India)</option>
                             <option value="en-AU">English (Australia)</option>
                             <option value="en-CA">English (Canada)</option>
                             <option value="en-GH">English (Ghana)</option>
                             <option value="en-GB">English (Great Britain)</option>
-                            <option value="en-IN">English (India)</option>
                             <option value="en-IE">English (Ireland)</option>
                             <option value="en-KE">English (Kenya)</option>
                             <option value="en-NZ">English (New Zealand)</option>
@@ -55,14 +61,15 @@
                             <option value="en-PH">English (Philippines)</option>
                             <option value="en-ZA">English (South Africa)</option>
                             <option value="en-TZ">English (Tanzania)</option>
-                            <option value="en-US">English (United States)</option>
                         </select>
                     </td>
-                    <td><input class="btn btn-info" type="button" value="{{ action.0 }}" onclick="return createSubtitles(this,'{{ file }}', '{{ action.1 }}')"/>{% endfor %}</td></tr>
+                {% endif %}
+                    <td>{% for action in actions %}<input class="btn btn-info" type="button" value="{{ action.0 }}" onclick="return createSubtitles(this,'{{ file }}', '{{ action.1 }}')"/> {% endfor %}</td></tr>
             {%  endfor %}
         </table>
     </div>
     {%  endif %}
+
 {% endblock %}
 
 

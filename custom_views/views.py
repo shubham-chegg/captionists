@@ -20,12 +20,11 @@ def get_videos(request, status=None):
     if not status:
         status = 'pending'
 
-    file_uploaded = False
     if status == 'pending' and request.method == 'POST' and request.FILES.get('file'):
         myfile = request.FILES['file']
-        fs = FileSystemStorage()
+        fs = FileSystemStorage(location=settings.PENDING_FILES)
         fs.save(myfile.name, myfile)
-
+        return render(request, 'listing.html', {'file_uploaded': True})
 
     folders = {'pending': settings.PENDING_FILES,
                'created': settings.CREATED_FILES,
@@ -37,11 +36,12 @@ def get_videos(request, status=None):
     folder = folders.get(status)
 
     if not folder:
-        return render(request, 'listing.html', {'error_message': 'invalid parameter'})
+        return render(request, 'listing.html', {'error_message': 'invalid parameter',
+                                                'status': status})
 
     files = os.listdir(folder)
     return render(request, 'listing.html', {'files': files, 'actions': actions.get(status),
-                                            'file_uploaded': file_uploaded})
+                                            'status': status})
 
 
 @api_view(['POST'])
