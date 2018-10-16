@@ -59,6 +59,10 @@ def process_video(request, action):
     return Response({'status': status})
 
 
+@api_view(['POST'])
+def update_subtitles(request, file_name):
+    return Response({'status':'success'})
+
 def edit_views(request, file_name):
     return render(request, 'video.html', {'video_url': settings.CREATED_FILES_URL + file_name + ".mp4",
                                           'subtitles_url': settings.SUBTITLES_FILE_URL + file_name + ".vtt"})
