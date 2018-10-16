@@ -186,19 +186,20 @@ function cue_to_view() {
     setTimeout(function(){cue_to_view()},3000);
 }
 
-function click(filename, action) {
-            $.ajax({
-                url: '/process/video/' + action + "/",
-                data: {
-                    'file_name': filename,
-                    'language_code': "en-US"
-                },
-                type: 'POST',
-                success: function () {
-                    location.reload();
-                },
-                fail: function (error) {
-                    alert(error);
-                }
-            });
+function createSubtitles(sender, filename, action) {
+    var language_code = $(sender).closest('tr').find('select').val();
+    $.ajax({
+        url: '/process/video/' + action + "/",
+        data: {
+            'file_name': filename,
+            'language_code': "en-US"
+        },
+        type: 'POST',
+        success: function () {
+            location.reload();
+        },
+        fail: function (error) {
+            alert(error);
         }
+    });
+}

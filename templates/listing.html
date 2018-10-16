@@ -38,7 +38,7 @@
                         <option value="en-US">English (United States)</option>
                     </select>
                 </td>
-                <td><input class="btn btn-info" type="button" value="{{ action.0 }}"  onclick="click('{{ file }}', '{{ action.1 }}')"/>{% endfor %}</td></tr>
+                <td><input class="btn btn-info" type="button" value="{{ action.0 }}" onclick="return createSubtitles(this,'{{ file }}', '{{ action.1 }}')"/>{% endfor %}</td></tr>
         {%  endfor %}
     </table>
     {%  endif %}
