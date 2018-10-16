@@ -33,12 +33,12 @@
     {% endif %}
 
     <div class="row">
-        <h4>Video are in {{ status }}</h4>
+        <h4>Video files in {{ status }} state.</h4>
         <table class="table">
             <thead>
-                <tr>
+                <tr style="background-color:#333; color: #fff;">
                     <th>File Name</th>
-                {% if action.1 == 'create_subtitles' %}
+                {% if actions.0.1 == 'create_subtitles' %}
                     <th>Locale</th>
                 {% endif %}
                     <th>Action</th>
