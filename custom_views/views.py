@@ -16,18 +16,18 @@ from processor.file_utils import move_file, get_file_name, get_subtitles_file, \
 from processor.main import create_subtitles_file
 
 
-@api_view(['POST'])
-def upload_video(request):
-    if request.FILES['file']:
+def get_videos(request, status=None):
+    if not status:
+        status = 'pending'
+
+    file_uploaded = False
+    if status == 'pending' and request.method == 'POST' and request.FILES.get('file'):
         myfile = request.FILES['file']
         fs = FileSystemStorage()
         fs.save(myfile.name, myfile)
-        return Response({
-            'file_uploaded': True
-        })
+        return render(request, 'listing.html', {'file_uploaded': file_uploaded})
 
 
-def get_videos(request, status):
     folders = {'pending': settings.PENDING_FILES,
                'created': settings.CREATED_FILES,
                'processed': settings.PROCESSED_FILES}
@@ -41,7 +41,8 @@ def get_videos(request, status):
         return render(request, 'listing.html', {'error_message': 'invalid parameter'})
 
     files = os.listdir(folder)
-    return render(request, 'listing.html', {'files': files, 'actions': actions.get(status)})
+    return render(request, 'listing.html', {'files': files, 'actions': actions.get(status),
+                                            'file_uploaded': file_uploaded})
 
 
 @api_view(['POST'])
@@ -64,12 +65,18 @@ def process_video(request, action):
 def update_subtitles(request, file_name):
     file_path = get_subtitles_file(file_name)
 
-    if os.path.exists(file_path) and request.POST.get('data'):
+    if not os.path.exists(file_path):
+        status = -1
+    elif not request.POST.get('data'):
+        status = -2
+
+    else:
+        status = 0
         f = open(file_path, 'w')
         f.write(request.POST.get('data', ''))
         f.close()
 
-    return Response({'status':'success'})
+    return Response({'status':status})
 
 
 def edit_views(request, file_name):
