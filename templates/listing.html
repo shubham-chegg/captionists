@@ -2,19 +2,6 @@
 
 {% load static %}
 
-{% block content %}
-    {% if error_message %}
-        <p> {{ error_message }}</p>
-    {%  else %}
-    <ul>
-        {% for file in files %}
-            <li>{{ file }} {% for action in actions %}<input type="button" value="{{ action.0 }}"  onclick="click('{{ file }}', '{{ action.1 }}')"/>{% endfor %}</li>
-        {%  endfor %}
-    </ul>
-    {%  endif %}
-{% endblock %}
-
-
 {% block js %}
     <script>
         function click(filename, action) {
@@ -35,3 +22,17 @@
         }
     </script>
 {% endblock %}
+
+{% block content %}
+    {% if error_message %}
+        <p> {{ error_message }}</p>
+    {%  else %}
+    <ul>
+        {% for file in files %}
+            <li>{{ file }} {% for action in actions %}<input type="button" value="{{ action.0 }}"  onclick="click('{{ file }}', '{{ action.1 }}')"/>{% endfor %}</li>
+        {%  endfor %}
+    </ul>
+    {%  endif %}
+{% endblock %}
+
+
