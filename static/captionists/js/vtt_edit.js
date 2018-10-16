@@ -112,6 +112,8 @@ function add_captions_to_table(count, start_time, end_time, text) {
 }
 
 function create_webvtt() {
+    var overlay = $('.overlay');
+    overlay.addClass('show');
     new_webvtt = "WEBVTT\n\n"
     var video = document.getElementById('video');
     // TODO get active track??
@@ -136,11 +138,7 @@ function create_webvtt() {
             data: new_webvtt
         },
     function(data, status){
-        if(data['status'] == 0){
-            window.location.reload();
-        }
-
-
+        setTimeout(function(){overlay.removeClass('show');}, 1000);
         console.log("Posted with status code: " + status);
     });
 }
