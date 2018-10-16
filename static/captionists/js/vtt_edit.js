@@ -18,6 +18,7 @@ function loadFile(url, timeout, callback) {
         }
     };
     xhr.open("GET", url, true);
+    xhr.setRequestHeader('Cache-Control', 'no-cache');
     xhr.timeout = timeout;
     xhr.send(null);
 }
@@ -139,6 +140,11 @@ function create_webvtt() {
             data: new_webvtt
         },
     function(data, status){
+        if(data['status'] == 0){
+            window.location.reload();
+        }
+
+
         console.log("Posted with status code: " + status);
     });
 }
@@ -186,20 +192,24 @@ function cue_to_view() {
     setTimeout(function(){cue_to_view()},3000);
 }
 
-function createSubtitles(sender, filename, action) {
+function processVideo(sender, filename, action) {
     var language_code = $(sender).closest('tr').find('select').val();
-    $.ajax({
-        url: '/process/video/' + action + "/",
-        data: {
-            'file_name': filename,
-            'language_code': language_code
-        },
-        type: 'POST',
-        success: function () {
-            location.reload();
-        },
-        fail: function (error) {
-            alert(error);
-        }
-    });
+    if(action == 'edit'){
+        window.location = '/edit/video/' + filename.slice(0, -4);
+    } else {
+        $.ajax({
+            url: '/process/video/' + action + "/",
+            data: {
+                'file_name': filename,
+                'language_code': language_code
+            },
+            type: 'POST',
+            success: function () {
+                location.reload();
+            },
+            fail: function (error) {
+                alert(error);
+            }
+        });
+    }
 }

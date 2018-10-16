@@ -315,6 +315,8 @@ figure[data-fullscreen=true] .controls .progress {
 	max-height: 400px;
 	overflow-y: scroll;;
 }
+
+
 input[type=file] {
 	display: block !important;
 	right: 1px;
@@ -376,7 +378,8 @@ input[type=file] {
     text-align: center;
 
 }
- .control-fileupload label {
+
+.control-fileupload label {
     line-height: 24px;
     color: #999999;
     font-size: 14px;
@@ -389,4 +392,4 @@ input[type=file] {
     margin-right: 90px;
     margin-bottom: 0px;
     cursor: text;
-  }
+}
