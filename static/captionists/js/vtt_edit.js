@@ -69,16 +69,12 @@ function add_captions_to_table(count, start_time, end_time, text) {
 
     start_time_to_id[start_time] = rowCount - 1;
 
-    var cell0 = row.insertCell(0);
-    cell0.innerHTML = "<div>" + start_time + "</div>"
 
-    var cell1 = row.insertCell(1);
-    cell1.innerHTML = "<div>" + end_time + "</div>"
 
-    var cell2 = row.insertCell(2);
-    cell2.innerHTML = "<textarea rows='3' class='cue-text' cols='50' id='cue_index_" + (rowCount - 1) + "' />"
+    var cell2 = row.insertCell(0);
+    cell2.innerHTML = "<span>Start Time: " + start_time + "</span>" + "<span>End Time: " + end_time + "</span>"+ "<textarea rows='3' class='cue-text' cols='40' id='cue_index_" + (rowCount - 1) + "' />"
 
-    var cell3 = row.insertCell(3);
+    var cell3 = row.insertCell(1);
     cell3.innerHTML = "<img id='play_" + (rowCount - 1) + "' src='/static/captionists/icons/play.png'></img>"
 
     var input_box = document.getElementById('cue_index_' + (rowCount - 1))

@@ -18,7 +18,7 @@
 
 {% block content %}
 	<div class="row">
-		<div class="col-sm-5">
+		<div class="col-sm-7">
 			<figure id="videoContainer" data-fullscreen="false">
 				<video id="video" controls preload="metadata">
 					<source src="{{ video_url }}" type="video/mp4">
@@ -26,12 +26,10 @@
 				</video>
 			</figure>
 		</div>
-		<div class="col-sm-7">
+		<div class="col-sm-5">
 			<div class="caption-region">
 				<table id="caption_table">
 					<tr>
-						<th>Start Time</th>
-						<th>End Time</th>
 						<th>Caption</th>
 						<th>Actions</th>
 					</tr>
