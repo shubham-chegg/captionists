@@ -73,7 +73,7 @@ function add_captions_to_table(count, start_time, end_time, text) {
 
 
     var cell2 = row.insertCell(0);
-    cell2.innerHTML = "<span>Start Time: " + start_time + "</span>" + "<span>End Time: " + end_time + "</span>"+ "<textarea rows='3' class='cue-text' cols='40' id='cue_index_" + (rowCount - 1) + "' />"
+    cell2.innerHTML = "<span>Start Time:" + start_time + " </span>" + "<span>End Time: " + end_time + "</span>"+ "<textarea rows='3' class='cue-text' cols='40' id='cue_index_" + (rowCount - 1) + "' />"
 
     var cell3 = row.insertCell(1);
     cell3.innerHTML = "<img id='play_" + (rowCount - 1) + "' src='/static/captionists/icons/play.png'></img>"

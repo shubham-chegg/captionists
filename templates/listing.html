@@ -10,6 +10,11 @@
     {% if error_message %}
         <p> {{ error_message }}</p>
     {%  else %}
+    {% if file_uploaded %}
+        <script type="application/javascript">
+            window.location = window.location
+        </script>
+    {% endif %}
     {% if status == 'pending' %}
         <div class="row">
             <form method="post" enctype="multipart/form-data">

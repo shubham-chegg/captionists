@@ -26,19 +26,27 @@ def process_audio(uri, language_code):
     res = []
     i = 1
     start_time = None
+    last_end_time = None
     line = ""
     for result in response.results:
         for word in result.alternatives[0].words:
             if i == 1:
-                start_time = convert_millis_to_min_sec(word.start_time.ToMilliseconds())
+                start_time = word.start_time.ToMilliseconds()
             if i < WORDS_IN_A_LINE:
                 line += " " + word.word
                 i += 1
             if i == WORDS_IN_A_LINE:
-                end_time = convert_millis_to_min_sec(word.end_time.ToMilliseconds())
-                res.append({'start_time': start_time,
-                            'end_time': end_time,
+                end_time = word.end_time.ToMilliseconds()
+                res.append({'start_time': convert_millis_to_min_sec(start_time),
+                            'end_time': convert_millis_to_min_sec(end_time),
                             'line': line})
+
+                if last_end_time and last_end_time - start_time >= 2000:
+                    res.append({'start_time': start_time,
+                                'end_time': end_time,
+                                'line': '...'})
+
+                last_end_time = end_time
                 i = 1
                 line = ''
     return res
