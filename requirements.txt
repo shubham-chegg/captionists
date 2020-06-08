@@ -1,5 +1,5 @@
 djangorestframework==3.9.1
-django==1.11.27
+django==1.11.29
 google-cloud-speech
 google-cloud-storage
 django_extensions
